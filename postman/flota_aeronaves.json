@@ -1,0 +1,201 @@
+{
+  "info": {
+    "name": "Control de Flotas Aeronáuticas — API",
+    "description": "Colección de pruebas para el sistema de control de flotas aeronáuticas. Cubre registro de aeronaves, operaciones de vuelo y flujos de mantenimiento MRO.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Gestión de Flota",
+      "item": [
+        {
+          "name": "Obtener Flota Completa",
+          "request": {
+            "method": "GET",
+            "url": "https://jsonplaceholder.typicode.com/users",
+            "description": "Obtiene todas las aeronaves registradas en el sistema de flota"
+          }
+        },
+        {
+          "name": "Obtener Aeronave por ID",
+          "request": {
+            "method": "GET",
+            "url": "https://jsonplaceholder.typicode.com/users/1",
+            "description": "Obtiene los datos de una aeronave específica por su matrícula"
+          }
+        },
+        {
+          "name": "Registrar Aeronave Nueva",
+          "request": {
+            "method": "POST",
+            "url": "https://jsonplaceholder.typicode.com/users",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"matricula\": \"EC-MHU\",\n  \"tipo\": \"Airbus A320neo\",\n  \"aerolinea\": \"Iberia\",\n  \"ciclos_totales\": 4821,\n  \"horas_vuelo\": 12430,\n  \"estado\": \"operativa\",\n  \"proximo_mantenimiento\": \"2026-06-15\"\n}"
+            },
+            "description": "Registra una nueva aeronave en el sistema de flota"
+          }
+        },
+        {
+          "name": "Actualizar Estado a AOG",
+          "request": {
+            "method": "PATCH",
+            "url": "https://jsonplaceholder.typicode.com/users/1",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"AOG\"\n}"
+            },
+            "description": "Actualiza el estado operativo de una aeronave a Aircraft on Ground"
+          }
+        },
+        {
+          "name": "Dar de Baja Aeronave",
+          "request": {
+            "method": "DELETE",
+            "url": "https://jsonplaceholder.typicode.com/users/1",
+            "description": "Retira una aeronave de la flota activa"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Operaciones de Vuelo",
+      "item": [
+        {
+          "name": "Obtener Vuelos Programados",
+          "request": {
+            "method": "GET",
+            "url": "https://jsonplaceholder.typicode.com/posts",
+            "description": "Obtiene todos los vuelos programados en el sistema"
+          }
+        },
+        {
+          "name": "Obtener Vuelo por ID",
+          "request": {
+            "method": "GET",
+            "url": "https://jsonplaceholder.typicode.com/posts/1",
+            "description": "Obtiene los datos de un vuelo específico"
+          }
+        },
+        {
+          "name": "Programar Vuelo Nuevo",
+          "request": {
+            "method": "POST",
+            "url": "https://jsonplaceholder.typicode.com/posts",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"numero_vuelo\": \"IB3456\",\n  \"origen\": \"MAD\",\n  \"destino\": \"BCN\",\n  \"aeronave_id\": \"EC-MHU\",\n  \"hora_salida\": \"2026-05-10T08:30:00Z\",\n  \"hora_llegada\": \"2026-05-10T09:45:00Z\",\n  \"pasajeros\": 156,\n  \"estado\": \"programado\"\n}"
+            },
+            "description": "Programa un nuevo vuelo en el sistema de despacho"
+          }
+        },
+        {
+          "name": "Actualizar Estado de Vuelo",
+          "request": {
+            "method": "PATCH",
+            "url": "https://jsonplaceholder.typicode.com/posts/1",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"en_ruta\"\n}"
+            },
+            "description": "Actualiza el estado de un vuelo de programado a en_ruta"
+          }
+        },
+        {
+          "name": "Cancelar Vuelo",
+          "request": {
+            "method": "DELETE",
+            "url": "https://jsonplaceholder.typicode.com/posts/1",
+            "description": "Cancela un vuelo programado"
+          }
+        },
+        {
+          "name": "Obtener Vuelos por Aeronave",
+          "request": {
+            "method": "GET",
+            "url": "https://jsonplaceholder.typicode.com/users/1/posts",
+            "description": "Obtiene el historial de vuelos de una aeronave específica"
+          }
+        }
+      ]
+    },
+    {
+      "name": "MRO — Mantenimiento",
+      "item": [
+        {
+          "name": "Obtener Órdenes de Trabajo Activas",
+          "request": {
+            "method": "GET",
+            "url": "https://jsonplaceholder.typicode.com/posts",
+            "description": "Obtiene todas las órdenes de mantenimiento activas"
+          }
+        },
+        {
+          "name": "Crear Orden de Mantenimiento",
+          "request": {
+            "method": "POST",
+            "url": "https://jsonplaceholder.typicode.com/posts",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"aeronave_id\": \"EC-MHU\",\n  \"tipo\": \"check-A\",\n  \"tecnico_id\": 7,\n  \"descripcion\": \"Inspeccion de tren de aterrizaje y frenos\",\n  \"prioridad\": \"alta\",\n  \"fecha_inicio\": \"2026-06-15\",\n  \"horas_estimadas\": 8\n}"
+            },
+            "description": "Crea una nueva orden de trabajo MRO para mantenimiento de aeronave"
+          }
+        },
+        {
+          "name": "Obtener Técnicos Disponibles",
+          "request": {
+            "method": "GET",
+            "url": "https://jsonplaceholder.typicode.com/users",
+            "description": "Obtiene la lista de técnicos certificados disponibles"
+          }
+        },
+        {
+          "name": "Asignar Técnico a Orden",
+          "request": {
+            "method": "POST",
+            "url": "https://jsonplaceholder.typicode.com/posts",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 7,\n  \"title\": \"check-A EC-MHU\",\n  \"body\": \"Inspeccion de tren de aterrizaje y frenos\"\n}"
+            },
+            "description": "Asigna un técnico certificado a una orden de mantenimiento"
+          }
+        },
+        {
+          "name": "Cerrar Orden de Mantenimiento",
+          "request": {
+            "method": "PATCH",
+            "url": "https://jsonplaceholder.typicode.com/posts/1",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"COMPLETADO - check-A EC-MHU\",\n  \"estado\": \"cerrada\"\n}"
+            },
+            "description": "Cierra una orden de mantenimiento completada"
+          }
+        }
+      ]
+    }
+  ]
+}
